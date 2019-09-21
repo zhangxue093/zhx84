@@ -55,6 +55,7 @@
 
     <script src="./js/lib/jquery-1.12.4.min.js"></script>
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/utils/user.js"></script>
     <script>
     // 1.给按钮创建点击事件
     // 2、收集信息进行判断
@@ -67,16 +68,15 @@
       $('#pResult').html('心里空空。。');
       $('#myModal').modal('show');
         }else{
-     $.post('http://localhost:8000/admin/login',{user_name:userName,password:password},function(res){
-    if(res.code == 200){
-      // 跳转页面
-     window.location.href='./index.html';
-    }else{
-      $('#pResult').html(res.msg);
-      $('#myModal').modal('show');
-    }
-
-     })
+       user.login(userName,password,function(res) {
+            if(res.code == 200){
+              // 跳转页面
+             window.location.href='./index.html';
+            }else{
+              $('#pResult').html(res.msg);
+              $('#myModal').modal('show');
+            }
+  });
         }
     })
     
