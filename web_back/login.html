@@ -56,11 +56,13 @@
     <script src="./js/lib/jquery-1.12.4.min.js"></script>
     <script src="./js/bootstrap/js/bootstrap.min.js"></script>
     <script src="./js/utils/user.js"></script>
+    <script src="./js/utils/config.js"></script>
     <script>
     // 1.给按钮创建点击事件
     // 2、收集信息进行判断
     // 3.ajax请求
     // 4.根据结果给反馈
+   
     $('#btnLogin').click(function(){
      var userName = $('#userName').val();
      var password = $('#password').val();
@@ -75,7 +77,10 @@
             }else{
               $('#pResult').html(res.msg);
               $('#myModal').modal('show');
+              $('#userName').val('');
+              $('#password').val('');
             }
+           
   });
         }
     })

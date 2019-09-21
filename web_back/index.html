@@ -9,10 +9,31 @@
     <link rel="stylesheet" href="css/reset.css" />
     <link rel="stylesheet" href="css/iconfont.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <script src="js/lib/jquery-1.12.4.min.js"></script>
+
   </head>
 
   <body>
+    <!-- 模态框 -->
+      <div class="modal fade"  id="myModal" tabindex="-1" role="dialog">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">关闭提示</h4>
+              </div>
+              <div class="modal-body">
+                <p id="pResult"></p>
+              </div>
+              <div class="modal-footer">
+                <button  id="hao" type="button" class="btn btn-default" data-dismiss="modal">好哒呦</button>
+                <button   type="button" class="btn btn-default" data-dismiss="modal">不要不要</button>
+              </div>
+            </div>
+            <!-- /.modal-content -->
+          </div>
+          <!-- /.modal-dialog -->
+        </div>
+
     <div class="sider">
       <a href="#" class="logo"><img src="images/logo02.png" alt="logo"/></a>
       <div class="user_info">
@@ -55,7 +76,7 @@
       </form>
       <div class="user_center_link">
         <a href="user.html" onclick="setMenu(3,0)" target="main_frame">个人中心</a>
-        <img src="images/2.jpg" alt="person" />
+        <img id="geren" src="images/2.jpg" alt="person" />
         <a href="javascript:;" id="btnLogout"><i class="iconfont icon-tuichu"></i> 退出</a>
       </div>
     </div>
@@ -64,6 +85,10 @@
       <iframe src="main_count.html" frameborder="0" id="main_frame" name="main_frame" frameborder="0" scrolling="auto"></iframe>
     </div>
 
+    <script src="js/lib/jquery-1.12.4.min.js"></script>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+    <script src="./js/utils/user.js"></script>
+    <script src="./js/utils/config.js"></script>
     <script>
       var $level01 = $('.level01');
       var $subli = $('.level02 li');
@@ -136,7 +161,40 @@
             .removeClass('active');
         }
       }
-    </script>
+
+
+
+
+
+      // 退出功能
+      $('#btnLogout').click(function(){
+        user.logout(function(res) {
+        $('#pResult').html("你真的要离开我吗？");
+          $('#myModal').modal('show');
+          $('#hao').click(function(){
+            if(res.code==200){
+            window.location.href='./login.html';
+        } 
+          })       
+      })
+      })
+   
+      // 获取管理员信息
+     $(function(){
+    user.getInfo(function(res){
+      if(res.code==200){
+            $('#userImg').attr('src',res.data.user_pic)
+            $('#geren').attr('src',res.data.user_pic)
+            $('#userName').html(res.data.nickname)
+           console.log(res); 
+      }
+     })
+    })
+
+   
+   </script>
+
+
 
     
   </body>
