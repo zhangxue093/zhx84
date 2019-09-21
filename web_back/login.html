@@ -12,7 +12,8 @@
   </head>
 
   <body>
-    <div class="modal fade" tabindex="-1" role="dialog">
+    <!-- 模态框 -->
+    <div class="modal fade"  id="myModal" tabindex="-1" role="dialog">
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
@@ -23,7 +24,7 @@
             <p id="pResult"></p>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">好哒呦</button>
           </div>
         </div>
         <!-- /.modal-content -->
@@ -50,6 +51,35 @@
       </div>
     </div>
 
+
+
+    <script src="./js/lib/jquery-1.12.4.min.js"></script>
+    <script src="./js/bootstrap/js/bootstrap.min.js"></script>
+    <script>
+    // 1.给按钮创建点击事件
+    // 2、收集信息进行判断
+    // 3.ajax请求
+    // 4.根据结果给反馈
+    $('#btnLogin').click(function(){
+     var userName = $('#userName').val();
+     var password = $('#password').val();
+     if(userName == ''|| password == ''){
+      $('#pResult').html('心里空空。。');
+      $('#myModal').modal('show');
+        }else{
+     $.post('http://localhost:8000/admin/login',{user_name:userName,password:password},function(res){
+    if(res.code == 200){
+      // 跳转页面
+     window.location.href='./index.html';
+    }else{
+      $('#pResult').html(res.msg);
+      $('#myModal').modal('show');
+    }
+
+     })
+        }
+    })
     
+    </script>    
   </body>
 </html>
